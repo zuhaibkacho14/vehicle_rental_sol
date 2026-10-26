@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_ws_vehicle_rental_booking_dashboard" model="ir.actions.act_window">
+        <field name="name">Rental Dashboard</field>
+        <field name="res_model">ws.vehicle.rental.booking</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="action_ws_vehicle_rental_config" model="ir.actions.act_window">
+        <field name="name">Vehicle Rental Settings</field>
+        <field name="res_model">ws.vehicle.rental.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_ws_vehicle_rental_root" name="Vehicle Rental" sequence="10" groups="group_ws_vehicle_rental_user"/>
+    <menuitem id="menu_ws_vehicle_rental_dashboard" parent="menu_ws_vehicle_rental_root" name="Dashboard" sequence="10" action="action_ws_vehicle_rental_booking_dashboard"/>
+    <menuitem id="menu_ws_vehicle_rental_bookings" parent="menu_ws_vehicle_rental_root" name="Bookings" sequence="20" action="action_ws_vehicle_rental_booking"/>
+    <menuitem id="menu_ws_vehicle_rental_config" parent="menu_ws_vehicle_rental_root" name="Configuration" sequence="100" action="action_ws_vehicle_rental_config"/>
+</odoo>

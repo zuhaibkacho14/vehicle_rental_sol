@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ws_vehicle_rental_booking_tree" model="ir.ui.view">
+        <field name="name">ws.vehicle.rental.booking.tree</field>
+        <field name="model">ws.vehicle.rental.booking</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" decoration-success="state == 'completed'" decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="duration_days"/>
+                <field name="amount_total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ws_vehicle_rental_booking_form" model="ir.ui.view">
+        <field name="name">ws.vehicle.rental.booking.form</field>
+        <field name="model">ws.vehicle.rental.booking</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Rental Booking">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn-primary" states="draft"/>
+                    <button name="action_start_rental" type="object" string="Start Rental" states="confirmed"/>
+                    <button name="action_return_vehicle" type="object" string="Return Vehicle" states="in_progress"/>
+                    <button name="action_cancel" type="object" string="Cancel" states="draft,confirmed,in_progress"/>
+                    <button name="action_create_invoice" type="object" string="Create Invoice" states="confirmed,in_progress,completed"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,in_progress,completed,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="responsible_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="pickup_date"/>
+                            <field name="return_date"/>
+                            <field name="duration_days"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="daily_rate"/>
+                            <field name="amount_untaxed"/>
+                            <field name="amount_tax"/>
+                            <field name="amount_total"/>
+                        </group>
+                        <group>
+                            <field name="invoice_id"/>
+                            <field name="cancel_reason" attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ws_vehicle_rental_booking_search" model="ir.ui.view">
+        <field name="name">ws.vehicle.rental.booking.search</field>
+        <field name="model">ws.vehicle.rental.booking</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state','=','confirmed')]"/>
+                <filter string="In Progress" name="in_progress" domain="[('state','=','in_progress')]"/>
+                <filter string="Completed" name="completed" domain="[('state','=','completed')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state','=','cancelled')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Customer" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                    <filter string="Vehicle" name="group_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ws_vehicle_rental_booking" model="ir.actions.act_window">
+        <field name="name">Rental Bookings</field>
+        <field name="res_model">ws.vehicle.rental.booking</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_confirmed': 1}</field>
+    </record>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ws_vehicle_rental_booking_user,ws.vehicle.rental.booking user,model_ws_vehicle_rental_booking,group_ws_vehicle_rental_user,1,1,1,0
+access_ws_vehicle_rental_booking_manager,ws.vehicle.rental.booking manager,model_ws_vehicle_rental_booking,group_ws_vehicle_rental_manager,1,1,1,1
+access_ws_vehicle_rental_config_user,ws.vehicle.rental.config user,model_ws_vehicle_rental_config,group_ws_vehicle_rental_user,1,0,0,0
+access_ws_vehicle_rental_config_manager,ws.vehicle.rental.config manager,model_ws_vehicle_rental_config,group_ws_vehicle_rental_manager,1,1,1,1
+access_ws_vehicle_rental_settings_manager,ws.vehicle.rental.settings manager,model_ws_vehicle_rental_settings,group_ws_vehicle_rental_manager,1,1,1,1
